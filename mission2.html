@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="asset/css/style.css" />
+    <title>Mission 2</title>
+  </head>
+  <body>
+    <header>
+      <div class="menu">
+        <ul>
+          <li>
+            <a href="index.html" class="titre">
+              <img
+                src="./asset/img/logo.svg"
+                alt="logo"
+                height="75"
+                width="200"
+              />
+            </a>
+          </li>
+          <li><a href="mission1.html">Mission 1</a></li>
+          <li><a href="mission2.html">Mission 2</a></li>
+          <li><a href="mission3.html">Mission 3</a></li>
+        </ul>
+      </div>
+    </header>
+    <h1 class="titreMission">Mission 2</h1>
+    <section class="mission">
+      <h2>1. Contexte</h2>
+      Le projet consiste à exploiter la base de données KDou à l’aide d’une
+      interface low-code, facilitant la réalisation de requêtes sans avoir
+      besoin de coder directement. L’objectif est de manipuler des données et
+      d’obtenir des indicateurs significatifs pour fournir des analyses et des
+      informations de gestion exploitables.
+      <h2>2. Présentation des Indicateurs</h2>
+      <h3>1) Produit d’Italie ou d’Allemagne à moins de 50€ :</h3>
+      Cet indicateur montre les produits d’origine italienne ou allemande ayant
+      un prix unitaire inférieur ou égal à 50 €. Cela aide à identifier les
+      offres de produits dans cette gamme de prix pour des clients
+      potentiellement intéressés par des produits européens à tarif accessible.
+      <img src="asset/img/requete1.png" alt="Resultat de la requete" />
+      Code SQL généré : <br />
+      SELECT Produit.NomProd, Fournisseur.Societe, Fournisseur.Pays,
+      Fournisseur.Ville, Produit.PrixUnit FROM Fournisseur INNER JOIN Produit ON
+      Fournisseur.NoFour = Produit.NoFour WHERE ((Fournisseur.Pays="Italie" Or
+      Fournisseur.Pays="Allemagne") AND (Produit.PrixUnit <= 50)) ORDER BY
+      Produit.NomProd, Fournisseur.Societe, Fournisseur.Pays;
+      <h3>2) Prix moyen, minimum et maximum des produits :</h3>
+      Cet indicateur fournit des statistiques de base sur les prix des produits.
+      Il donne un aperçu de la gamme de prix et aide à comprendre la diversité
+      de l’offre en termes de coût.
+      <img src="asset/img/requete2.png" alt="Resultat de la requete" />
+      Code SQL généré : <br />
+      SELECT Avg(Produit.PrixUnit) AS [Prix Moyen], Max(Produit.PrixUnit) AS
+      [Prix Maximum], Min(Produit.PrixUnit) AS [Prix Minimum] FROM Produit;
+      <h3>3) Chiffre d’affaires total généré :</h3>
+      Cet indicateur calcule le chiffre d’affaires total en fonction des
+      commandes passées. Cela fournit une mesure de performance financière
+      essentielle pour la gestion et la prise de décisions. Résultat : Le
+      chiffre d’affaire total est de 1 648 176,92 € Code SQL généré : SELECT
+      Sum([PrixUnitCli]*[QteCom]) AS T FROM DetailCommande;
+      <h3>4) Nombre de clients par ville :</h3>
+      Cet indicateur classe les villes par nombre de clients, permettant de
+      déterminer les marchés les plus développés. Il est utile pour évaluer la
+      concentration géographique des clients et cibler des actions marketing
+      spécifiques.
+      <img src="asset/img/requete4.png" alt="Resultat de la requete" />
+      Code SQL généré :
+      <br />
+      SELECT Client.VilleCli, Count(Client.VilleCli) AS CompteDeVilleCli FROM
+      Client GROUP BY Client.VilleCli ORDER BY Count(Client.VilleCli) DESC;
+    </section>
+  </body>
+</html>
